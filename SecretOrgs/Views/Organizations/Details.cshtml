@@ -1,0 +1,37 @@
+﻿@model SecretOrgs.Models.Organization
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Organization Details</h2>
+
+<div>
+    <h4>Organization</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OrganizationName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrganizationName)
+        </dd>
+
+
+
+    </dl>
+</div>
+<p>
+    @if (Request.IsAuthenticated && User.IsInRole("KeeperOfSecrets"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) <span>|</span> 
+    }
+    @Html.ActionLink("Back to List", "Index")
+</p>
