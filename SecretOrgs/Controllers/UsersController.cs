@@ -10,115 +10,107 @@ using SecretOrgs.Models;
 
 namespace SecretOrgs.Controllers
 {
-    [Authorize(Roles = "Intern")]
-    public class OrganizationsController : Controller
+    public class UsersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Organizations
+        // GET: Users
         public ActionResult Index()
         {
-            return View(db.Organizations.ToList());
+            return View(db.Users.ToList());
         }
 
-        // GET: Organizations/Details/5
-         [Authorize(Roles = "Grunt")]
-        public ActionResult Details(int? id)
+        // GET: Users/Details/5
+        public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Organization organization = db.Organizations.Find(id);
-            if (organization == null)
+            ApplicationUser applicationUser = db.Users.Find(id);
+            if (applicationUser == null)
             {
                 return HttpNotFound();
             }
-            return View(organization);
+            return View(applicationUser);
         }
 
-        // GET: Organizations/Create
-        [Authorize(Roles="Big Boss")]
+        // GET: Users/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Organizations/Create
+        // POST: Users/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Big Boss")]
-        public ActionResult Create([Bind(Include = "Id,OrganizationName")] Organization organization)
+        public ActionResult Create([Bind(Include = "Id,Name,Title,BirthDate,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
         {
             if (ModelState.IsValid)
             {
-                db.Organizations.Add(organization);
+                db.Users.Add(applicationUser);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(organization);
+            return View(applicationUser);
         }
 
-        // GET: Organizations/Edit/5
-        [Authorize(Roles = "Boss")]
-        public ActionResult Edit(int? id)
+        // GET: Users/Edit/5
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Organization organization = db.Organizations.Find(id);
-            if (organization == null)
+            ApplicationUser applicationUser = db.Users.Find(id);
+            if (applicationUser == null)
             {
                 return HttpNotFound();
             }
-            return View(organization);
+            return View(applicationUser);
         }
 
-        // POST: Organizations/Edit/5
+        // POST: Users/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Boss")]
-        public ActionResult Edit([Bind(Include = "Id,OrganizationName")] Organization organization)
+        public ActionResult Edit([Bind(Include = "Id,Name,Title,BirthDate,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(organization).State = EntityState.Modified;
+                db.Entry(applicationUser).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(organization);
+            return View(applicationUser);
         }
 
-        // GET: Organizations/Delete/5
-        [Authorize(Roles = "KeeperOfSecrets")]
-        public ActionResult Delete(int? id)
+        // GET: Users/Delete/5
+        public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Organization organization = db.Organizations.Find(id);
-            if (organization == null)
+            ApplicationUser applicationUser = db.Users.Find(id);
+            if (applicationUser == null)
             {
                 return HttpNotFound();
             }
-            return View(organization);
+            return View(applicationUser);
         }
 
-        // POST: Organizations/Delete/5
-        [Authorize(Roles = "KeeperOfSecrets")]
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
-            Organization organization = db.Organizations.Find(id);
-            db.Organizations.Remove(organization);
+            ApplicationUser applicationUser = db.Users.Find(id);
+            db.Users.Remove(applicationUser);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

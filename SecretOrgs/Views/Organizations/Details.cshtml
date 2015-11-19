@@ -29,7 +29,7 @@
     </dl>
 </div>
 <p>
-    @if (Request.IsAuthenticated && User.IsInRole("KeeperOfSecrets"))
+    @if (Request.IsAuthenticated && User.IsInRole("Boss"))
     {
         @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) <span>|</span> 
     }

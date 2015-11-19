@@ -12,11 +12,19 @@ using SecretOrgs.Models;
 
 namespace SecretOrgs.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="Intern")]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
+
+        private ApplicationDbContext db = new ApplicationDbContext();
+        // GET: Organizations
+        public ActionResult Index()
+        {
+            return View(db.Users.ToList());
+        }
 
         public AccountController()
         {
@@ -422,6 +430,7 @@ namespace SecretOrgs.Controllers
 
             base.Dispose(disposing);
         }
+
 
         #region Helpers
         // Used for XSRF protection when adding external logins

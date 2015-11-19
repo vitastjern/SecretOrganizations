@@ -6,7 +6,7 @@
 
 <h2>Organization Index</h2>
 
-@if (Request.IsAuthenticated && User.IsInRole("KeeperOfSecrets"))
+@if (Request.IsAuthenticated && User.IsInRole("Big Boss"))
 {
     <p>
         @Html.ActionLink("Create New", "Create")
@@ -26,17 +26,21 @@
             <td>
                 @Html.DisplayFor(modelItem => item.OrganizationName)
             </td>
-            <td>
-                @if (Request.IsAuthenticated && User.IsInRole("KeeperOfSecrets"))
-                {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <span>|</span>
-                }
-                @Html.ActionLink("Details", "Details", new { id = item.Id })
-                @if (Request.IsAuthenticated && User.IsInRole("KeeperOfSecrets"))
-                {
-                    <span>|</span>@Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                }
-            </td>
+
+            @if (Request.IsAuthenticated && User.IsInRole("Grunt"))
+            {
+                <td>
+                    @if (User.IsInRole("Boss"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <span>|</span>
+                    }
+                    @Html.ActionLink("Details", "Details", new { id = item.Id })
+                    @if (User.IsInRole("KeeperOfSecrets"))
+                    {
+                        <span>|</span>@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    }
+                </td>
+            }
         </tr>
     }
 
